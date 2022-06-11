@@ -1,6 +1,8 @@
+#!/bin/sh
+
 sudo apt-get update
 
-sudo apt-get install -y \
+sudo apt-get install \
     ca-certificates \
     curl \
     gnupg \
@@ -14,27 +16,33 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 sudo docker run hello-world
 
 echo Okay, lets set up some variables
-echo 
-echo Enter you email (the one SSL certificate will be generated for):
-echo Введите ваш email (на него будет зарегистрирован SSL-сертификат):
+echo
+echo "Enter you email (the one SSL certificate will be generated for):"
+echo "Введите ваш email (на него будет зарегистрирован SSL-сертификат):"
 read email
-set NS_EMAIL=$email
+echo "NS_EMAIL=$email" >> .env
+echo
 
 echo Now enter domain name you Nightscout will be hosted at:
 echo Введите имя домена, на котором ваш Nightscout будет доступен:
-read ns_domain
-set NS_DOMAIN=$ns_domain
+read domain
+echo "NS_DOMAIN=$domain" >> .env
+echo
 
-set NS_SECRET=$(uuidgen)
+secret=$(cat /proc/sys/kernel/random/uuid)
+echo "NS_SECRET=$secret" >> .env
 
-echo Your secret for Nightscout access (write it down!):
-echo Ваш секретный ключи для доступа к Nightscout (запишите!):
-echo $NS_SECRET
+curl https://raw.githubusercontent.com/justmara/ns-setup/main/setup/docker-compose.yml --output docker-compose.yml
 
-echo $NS_EMAIL
-echo $NS_DOMAIN
+sudo docker compose up -d
+
+echo "Your secret for Nightscout access (write it down!):"
+echo "Ваш секретный ключ для доступа к Nightscout (запишите!):"
+echo "secret: $secret"
+echo "email: $email"
+echo "domain: $domain"

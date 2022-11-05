@@ -23,12 +23,10 @@ sudo docker run hello-world
 echo Итак, немного настроек
 echo
 
-while [[ ! $domain =~ ^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$ ]]; do
+while [[ ! "$domain" =~ ^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$ ]]; do
   echo "Введите имя домена, на котором ваш Nightscout будет доступен:"
   read domain
-  echo
 done
-read domain
 echo "NS_DOMAIN=$domain" >> .env
 echo
 

@@ -24,5 +24,7 @@ cat >> docker-compose.yml <<EOF
       API_SECRET: '${secret}'
 EOF
 
+docker-compose up -d
+
 echo "domain: $domain"
 echo "secret: $secret"

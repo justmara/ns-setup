@@ -34,4 +34,4 @@ echo
 
 curl https://raw.githubusercontent.com/justmara/ns-setup/main/docker-compose.yml --output docker-compose.yml
 
-bash <(wget -qO- https://raw.githubusercontent.com/bjornoleh/ns-setup/bo-multi/add.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/justmara/ns-setup/main/add.sh)

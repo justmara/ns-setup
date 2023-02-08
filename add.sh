@@ -21,6 +21,7 @@ cat >> docker-compose.yml <<EOF
       - 'traefik.http.routers.nightscout-${subdomain}.entrypoints=web'
       - 'traefik.http.routers.nightscout-${subdomain}.entrypoints=websecure'
       - 'traefik.http.routers.nightscout-${subdomain}.tls.certresolver=le'
+    logging: *default-logging
     environment:
       <<: *ns-common-env
       CUSTOM_TITLE:

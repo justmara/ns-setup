@@ -23,26 +23,15 @@ sudo docker run hello-world
 echo Okay, lets set up some variables
 echo
 echo "Enter you email (the one SSL certificate will be generated for):"
-echo "Введите ваш email (на него будет зарегистрирован SSL-сертификат):"
 read email
 echo "NS_EMAIL=$email" >> .env
 echo
 
-echo Now enter domain name you Nightscout will be hosted at:
-echo Введите имя домена, на котором ваш Nightscout будет доступен:
+echo Now enter the domain name you Nightscout will be hosted at, excluding the subdomain:
 read domain
 echo "NS_DOMAIN=$domain" >> .env
 echo
 
-secret=$(cat /proc/sys/kernel/random/uuid)
-echo "NS_SECRET=$secret" >> .env
-
 curl https://raw.githubusercontent.com/justmara/ns-setup/main/docker-compose.yml --output docker-compose.yml
 
-sudo docker compose up -d
-
-echo "Your secret for Nightscout access (write it down!):"
-echo "Ваш секретный ключ для доступа к Nightscout (запишите!):"
-echo "secret: $secret"
-echo "email: $email"
-echo "domain: $domain"
+bash <(wget -qO- https://raw.githubusercontent.com/justmara/ns-setup/main/add.sh)
